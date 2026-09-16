@@ -20,13 +20,13 @@ jobs:
       - name: Run tests
         run: npm test
 
-  dev:
+  deploy:
     runs-on: ubuntu-latest
     needs: test
     steps:
       - name: Get code
         uses: actions/checkout@v7
-      - name: Setup Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v7
         with:
           node-version: '24'

@@ -20,7 +20,7 @@ jobs:
       - name: Run tests
         run: npm test
 
-  deploy:
+  build:
     needs: test
     runs-on: ubuntu-latest
    
@@ -35,5 +35,21 @@ jobs:
         run: npm ci
       - name: Build Project
         run: npm run build
-      - name: Deploy 
-        run: echo "Deploying to GitHub Pages..." 
+      - name: upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: dist-file
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: dist-file
+      - name: list file
+        run: ls -la 
+      - name: Deploy
+        run: echo "Deploying to GitHub Pages"
+      
